@@ -33,6 +33,9 @@
     TENANT_ID, SHORTORGNAME, CREATEDATE, LASTMODIFIEDON, AMOUNTLIMITS, PLATFORMSUPPLIERRATE, 
     CORECOMPANYRATE, AREAID
   </sql>
+  <select id="selectAllOrg" resultMap="BaseResultMap">
+    select * from TSYS_ORGANIZATION
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
