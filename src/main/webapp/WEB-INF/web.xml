@@ -51,13 +51,21 @@
   <listener>
     <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
   </listener>
-
-  <!--在向servlet或JSP页面指定初始化参数或指定url时，必须首先命名servlet或JSP页面。
-      Servlet元素就是用来完成此项任务的-->
-  <!--spring mvc servlet-->
+  <!--<servlet>
+    <servlet-name>WebTest</servlet-name>
+    <servlet-class> com.taobao.pamirs.schedule.WebInitial</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WebTest</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>-->
+ <!-- 在向servlet或JSP页面指定初始化参数或指定url时，必须首先命名servlet或JSP页面。
+      Servlet元素就是用来完成此项任务的spring mvc servlet-->
+<!--自定义分发器，重写onRefresh方法-->
   <servlet>
     <servlet-name>SpringMVC</servlet-name>
-    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <servlet-class>com.taskconsole.util.DeDispatcherServlet</servlet-class>
     <init-param>
       <param-name>contextConfigLocation</param-name>
       <param-value>classpath:spring-mvc.xml</param-value>
@@ -72,6 +80,8 @@
     <servlet-name>SpringMVC</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
+
+
 
   <!--指示服务器在收到引用一个目录名而不是文件名的URL时，使用哪个文件-->
   <welcome-file-list>
