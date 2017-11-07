@@ -1,8 +1,9 @@
-
 <%@page import="com.taobao.pamirs.schedule.taskmanager.ScheduleTaskType"%>
 <%@page import="com.taobao.pamirs.schedule.taskmanager.ScheduleServer"%>
 <%@page import="com.taobao.pamirs.schedule.ConsoleManager"%>
 <%@page import="java.util.List"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html; charset=GB2312" %>
 <html>
 <head>
@@ -28,9 +29,7 @@ String ip =  request.getParameter("ip");
 String orderStr =  request.getParameter("orderStr");
 %>
 
-<%
-if(managerFactoryUUID == null || managerFactoryUUID.trim().length() == 0){
-%>
+<c:if test="${fn:length(managerFactoryUUID) == 0||empty managerFactoryUUID}">
 <table border="0">
   <tr>
   	<td>任务类型：</td><td><input type="text" id="baseTaskType" value="<%=baseTaskType==null?"":baseTaskType%>"> </td>
@@ -40,9 +39,8 @@ if(managerFactoryUUID == null || managerFactoryUUID.trim().length() == 0){
   	<td><input type="button"  onclick="query()" value="查询" style="width:100;"></td>
   </tr>  
 </table>
-<%
-}
-%>
+</c:if>
+
    <table id="list" border="1" style=";border-COLLAPSE: collapse;display:block;">
    <tr >
    <th nowrap>序号</th>
@@ -60,43 +58,42 @@ if(managerFactoryUUID == null || managerFactoryUUID.trim().length() == 0){
    <th>处理器<BR/>[MANAGER_FACTORY]</th>
    <th>处理详情</th>   
    </tr>
-   <%
-   List<ScheduleServer> serverList = null;
-   if(managerFactoryUUID != null && managerFactoryUUID.trim().length() >0){
-	   serverList = ConsoleManager.getScheduleDataManager().selectScheduleServerByManagerFactoryUUID(managerFactoryUUID);
-   }else{
-	   serverList = ConsoleManager.getScheduleDataManager()
-       .selectScheduleServer(baseTaskType,ownSign,ip,orderStr);
-   }
-   
-   for(int j =0;j<serverList.size();j++){
-	   String bgColor="";
-	   ScheduleTaskType base = ConsoleManager.getScheduleDataManager().loadTaskTypeBaseInfo(serverList.get(j).getBaseTaskType());
-	   if(serverList.get(j).getCenterServerTime().getTime() - serverList.get(j).getHeartBeatTime().getTime() > base.getJudgeDeadInterval()){
-		   bgColor = "BGCOLOR='#A9A9A9'";
-	   }else if(serverList.get(j).getLastFetchDataTime() == null || serverList.get(j).getCenterServerTime().getTime() - serverList.get(j).getLastFetchDataTime().getTime() > base.getHeartBeatRate()*20){
-		   bgColor = "BGCOLOR='#FF0000'";
-	   }
-   %>
-	   <tr onclick="openDetail(this)" <%=bgColor%>>
-	   <td><%=(j+1) %></td>
-	   <td><%=serverList.get(j).getBaseTaskType()%></td>	  
-	   <td><%=serverList.get(j).getOwnSign()%></td>	  
-	   <td nowrap><%=serverList.get(j).getIp()%></td>	  
-	   <td nowrap><%=serverList.get(j).getHostName()%></td>	
-	   <td><%=serverList.get(j).getThreadNum()%></td>	
-	   <td nowrap><%=serverList.get(j).getRegisterTime()%></td>	
-	   <td nowrap><%=serverList.get(j).getHeartBeatTime()%></td>	
-	   <td nowrap><%=serverList.get(j).getLastFetchDataTime()== null ?"--":serverList.get(j).getLastFetchDataTime()%></td>	
-	   <td><%=serverList.get(j).getVersion()%></td>	
-	   <td nowrap><%=serverList.get(j).getNextRunStartTime() == null?"--":serverList.get(j).getNextRunStartTime()%></td>	
-	   <td nowrap><%=serverList.get(j).getNextRunEndTime()==null?"--":serverList.get(j).getNextRunEndTime()%></td>
-	   <td nowrap><%=serverList.get(j).getManagerFactoryUUID()%></td>	
-	   <td nowrap><%=serverList.get(j).getDealInfoDesc()%></td>	
-	   </tr>      
-   <%
-   }
-   %>
+
+       <c:forEach items="${bgColorList}" var="bgColor" varStatus="idxStatus">
+       <tr onclick="openDetail(this)" ${bgColor.bgColor}>
+       </c:forEach>
+       <c:forEach items="${serverList}" var="server" varStatus="idxStatus">
+	   <td>${idxStatus.index+1}</td>
+       <td>${server.baseTaskType}</td>
+       <td>${server.ownSign}</td>
+       <td nowrap>${server.ip}</td>
+       <td nowrap>${server.hostName}</td>
+       <td>${server.threadNum}</td>
+       <td nowrap>${server.registerTime}</td>
+       <td nowrap>${server.heartBeatTime}</td>
+       <c:if test="${server.lastFetchDataTime==null}">
+           <td nowrap>--</td>
+       </c:if>
+       <c:if test="${server.lastFetchDataTime!=null}">
+           <td nowrap>${server.lastFetchDataTime}</td>
+       </c:if>
+       <td nowrap>${server.version}</td>
+       <c:if test="${server.nextRunStartTime==null}">
+           <td nowrap>--</td>
+       </c:if>
+       <c:if test="${server.nextRunStartTime!=null}">
+           <td nowrap>${server.nextRunStartTime}</td>
+       </c:if>
+       <c:if test="${server.nextRunEndTime==null}">
+           <td nowrap>--</td>
+       </c:if>
+       <c:if test="${server.nextRunEndTime!=null}">
+           <td nowrap>${server.nextRunEndTime}</td>
+       </c:if>
+       <td nowrap>${server.managerFactoryUUID}</td>
+       <td nowrap>${server.dealInfoDesc}</td>
+	   </tr>
+       </c:forEach>
    </table>
 </body>
 </html>

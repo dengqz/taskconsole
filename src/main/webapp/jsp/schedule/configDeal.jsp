@@ -19,8 +19,8 @@ try{
 %>
 <script>
 	if(parent != null){
-	  parent.location.href ="index.jsp?manager=true";
+	  parent.location.href ="../../index.jsp";
 	}else{
-	  window.location.href ="index.jsp?manager=true";	
+	  window.location.href ="../../index.jsp";
 	}
 </script>
