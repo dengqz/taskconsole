@@ -1,8 +1,9 @@
 <%@page import="java.io.*"%>
 <%@page import="java.util.*"%>
 <%@page import="com.taobao.pamirs.schedule.ConsoleManager"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=GB2312"%>
-<%
+<%--<%
 	if (ConsoleManager.isInitial() == false) {
 		response.sendRedirect("config.jsp");
 	}
@@ -41,22 +42,22 @@
 				+ e.getMessage() + "\n" + strWriter.toString()
 				+ "</h3>");
 	}
-%>
+%>--%>
 <!-- encType="multipart/form-data" -->
 <html>
 <body style="font-size: 12px;">
 <form id="taskTypeForm" method="post" name="taskTypeForm"
-	action="importConfig.jsp"><pre
+	action="${pageContext.request.contextPath}/zookeeper/importConfig"><pre
 	style="width: 100px; float: left;">配置文本信息：</pre> <textarea
-	name="configContent" style="width: 1000px; height: 150px;"><%=configContent%></textarea>
+	name="configContent" style="width: 1000px; height: 150px;">${configContent}<%--<%=configContent%>--%></textarea>
 <br />
 是否强制更新：&nbsp;&nbsp; <select name="isUpdate">
-	<option value="true" <%if (isUpdate) {%> selected <%}%>>是</option>
-	<option value="false" <%if (!isUpdate) {%> selected <%}%>>否</option>
+		<option value="true" <c:if test="${isUpdate=='true'}">selected</c:if>><%--<%if (isUpdate) {%> selected <%}%>>--%>是</option>
+	<option value="false" <c:if test="${isUpdate=='false'}">selected</c:if>><%--<%if (!isUpdate) {%> selected <%}%>>--%>否</option>
 </select> <input type="button" onclick="importConfig();" value="导入配置" /></form>
 <pre>
 	<h3>
-<%=writer.toString()%>
+${writer}<%--<%=writer.toString()%>--%>
 	</h3>
 </pre>
 <script>

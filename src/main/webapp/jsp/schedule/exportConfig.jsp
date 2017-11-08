@@ -1,7 +1,8 @@
 <%@page import="java.io.*"%>
 <%@page import="com.taobao.pamirs.schedule.ConsoleManager"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=GB2312"%>
-<%
+<%--<%
 	if (ConsoleManager.isInitial() == false) {
 		response.sendRedirect("config.jsp");
 	}
@@ -46,20 +47,26 @@
 			errWriter.write("<font color=\"red\">错误的堆栈信息:</font>\n\t" + e.getMessage()+"\n"+strWriter);
 		}
 	}
-%>
+%>--%>
 <html>
 <body style="font-size: 12px;">
 <form id="taskTypeForm" method="post" name="taskTypeForm"
-	action="exportConfig.jsp"><input type="hidden" id="type"
-	name="type" value="1" /> 配置文件路径：<input type="text" name="rootPath"
-	value="<%=rootPath == null ? "" : rootPath%>" style="width:330px;" />
+	action="${pageContext.request.contextPath}/zookeeper/exportConfig"><input type="hidden" id="type"
+                                     name="type" value="1" /> 配置文件路径：<input type="text" name="rootPath"
+	value="${rootPath}" style="width:330px;" />
 <input type="button" onclick="viewConfig();" value="查看" /> <input
 	type="button" onclick="saveConfig();" value="导出" />
 <pre>
-<%if(errWriter==null || errWriter.getBuffer().length() == 0) { %>
+<c:if test="${ errWriter==''}">
+	${confWriter}
+</c:if>
+	<h3>
+		${errWriter}
+	</h3>
+<%--<%if(errWriter==null || errWriter.getBuffer().length() == 0) { %>
 <%=confWriter%>
 <%} %><h3>
-<%=errWriter == null ? "" : errWriter%>
+<%=errWriter == null ? "" : errWriter%>--%>
 </h3>
 </pre>
 </form>
