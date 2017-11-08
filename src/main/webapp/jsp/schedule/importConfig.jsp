@@ -47,7 +47,7 @@
 <html>
 <body style="font-size: 12px;">
 <form id="taskTypeForm" method="post" name="taskTypeForm"
-	action="importConfig.jsp"><pre
+	action="${pageContext.request.contextPath}/zookeeper/importConfig"><pre
 	style="width: 100px; float: left;">配置文本信息：</pre> <textarea
 	name="configContent" style="width: 1000px; height: 150px;">${configContent}<%--<%=configContent%>--%></textarea>
 <br />

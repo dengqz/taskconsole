@@ -84,7 +84,7 @@ function openDetail(obj,strategyName){
 	}
 	obj.bgColor="#FFD700";
 	oldSelectRow = obj;
-	document.getElementById("showStrategyDetail").src = "${pageContext.request.contextPath}/jsp/schedule/scheduleStrategyRuntime.jsp?strategyName=" + strategyName;
+	document.getElementById("showStrategyDetail").src = "${pageContext.request.contextPath}/ssl/scheduleStrategyRuntime?strategyName=" + strategyName;
 }
 if(contentTable.rows.length >1){
 	contentTable.rows[1].click();

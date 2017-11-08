@@ -1,5 +1,6 @@
 package com.taskconsole.controller;
 
+import com.taobao.pamirs.schedule.ConsoleManager;
 import com.taobao.pamirs.schedule.zk.ZKManager;
 import com.taskconsole.service.impl.ZookeeperServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -53,5 +54,21 @@ public class InitController {
         zkMap.put("configFile",configFile);
         model.addAttribute("zkMap",zkMap);
         return "schedule/config";
+    }
+
+    @RequestMapping("configDeal")
+    public String configDeal(HttpServletRequest request,HttpServletResponse response,Model model){
+        Properties p = new Properties();
+        p.setProperty(ZKManager.keys.zkConnectString.toString(),request.getParameter(ZKManager.keys.zkConnectString.toString()));
+        p.setProperty(ZKManager.keys.rootPath.toString(),request.getParameter(ZKManager.keys.rootPath.toString()));
+        p.setProperty(ZKManager.keys.userName.toString(),request.getParameter(ZKManager.keys.userName.toString()));
+        p.setProperty(ZKManager.keys.password.toString(),request.getParameter(ZKManager.keys.password.toString()));
+        p.setProperty(ZKManager.keys.zkSessionTimeout.toString(),request.getParameter(ZKManager.keys.zkSessionTimeout.toString()));
+        try{
+            ConsoleManager.saveConfigInfo(p);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return "schedule/configDeal";
     }
 }

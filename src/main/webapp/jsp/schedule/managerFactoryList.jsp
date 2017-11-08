@@ -6,13 +6,10 @@
 调度策略管理
 </title>
 <STYLE type=text/css>
-
-
 TH{height:20px;color:#5371BA;font-weight:bold;font-size:12px;text-align:center;border:#8CB2E3 solid;border-width:0 1 1 0;background-color:#E4EFF1;white-space:nowrap;overflow:hidden;}
 TD{background-color: ;border:#8CB2E3 1px solid;border-width:0 1 1 0;font-size:12px;}
 table{border-collapse:collapse}
 </STYLE>
-
 </head>
 <body style="font-size:12px;">
 
@@ -65,8 +62,8 @@ function openDetail(obj,uuid){
 	}
 	obj.bgColor="#FFD700";
 	oldSelectRow = obj;
-    document.all("servlerList").src = "${pageContext.request.contextPath}/jsp/schedule/serverList.jsp?managerFactoryUUID=" + uuid;
-    document.all("scheduleStrategyRuntime").src = "${pageContext.request.contextPath}/jsp/schedule/scheduleStrategyRuntime.jsp?uuid=" + uuid;
+    document.all("servlerList").src = "${pageContext.request.contextPath}/scheduleserverlist/getscheduleserverlist?managerFactoryUUID=" + uuid;
+    document.all("scheduleStrategyRuntime").src = "${pageContext.request.contextPath}/ssl/scheduleStrategyRuntime?uuid=" + uuid;
 }
 if(contentTable.rows.length >1){
 	contentTable.rows[1].click();

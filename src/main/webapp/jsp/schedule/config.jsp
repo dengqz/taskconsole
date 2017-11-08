@@ -1,7 +1,3 @@
-<%@page import="com.taobao.pamirs.schedule.zk.ZKManager"%>
-<%@page import="java.util.Properties"%>
-<%@page import="com.taobao.pamirs.schedule.ConsoleManager"%>
-<%@page import="com.taobao.pamirs.schedule.strategy.ScheduleStrategy"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=GB2312" %>
 
@@ -16,7 +12,7 @@ TD{font-size:12px;}
 </head>
 <body>
 <h1>基础信息配置</h1>
-<form id="configForm" method="get" name="configForm" action="configDeal.jsp">
+<form id="configForm" method="get" name="configForm" action="${pageContext.request.contextPath}/init/configDeal">
 <table>
 <tr>
 	<td>Zookeeper地址:</td>

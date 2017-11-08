@@ -2,6 +2,7 @@ package com.taskconsole.controller;
 
 import com.taobao.pamirs.schedule.ConsoleManager;
 import com.taobao.pamirs.schedule.strategy.ScheduleStrategy;
+import com.taobao.pamirs.schedule.strategy.ScheduleStrategyRunntime;
 import com.taskconsole.service.impl.ZookeeperServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -138,6 +140,26 @@ public class ScheduleStrategyListController {
         model.addAttribute("result",result);
         model.addAttribute("isRefreshParent",isRefreshParent);
         return "schedule/scheduleStrategyDeal";
+    }
+
+    @RequestMapping("scheduleStrategyRuntime")
+    public String scheduleStrategyRuntime(HttpServletRequest request,HttpServletResponse response,Model model){
+        String strategyName =request.getParameter("strategyName");
+        String uuid =request.getParameter("uuid");
+        List<ScheduleStrategyRunntime> runntimeList = null;
+        try {
+            if(strategyName != null && strategyName.trim().length() > 0){
+                runntimeList =ConsoleManager.getScheduleStrategyManager().loadAllScheduleStrategyRunntimeByTaskType(strategyName);
+            }else if(uuid != null && uuid.trim().length() > 0){
+                runntimeList =ConsoleManager.getScheduleStrategyManager().loadAllScheduleStrategyRunntimeByUUID(uuid);
+            }else{
+                runntimeList =new ArrayList<ScheduleStrategyRunntime>();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        model.addAttribute("runntimeList",runntimeList);
+        return "schedule/scheduleStrategyRuntime";
     }
 
 

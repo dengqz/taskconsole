@@ -1,5 +1,6 @@
 package com.taskconsole.controller;
 
+import com.taobao.pamirs.schedule.ConsoleManager;
 import com.taobao.pamirs.schedule.strategy.ManagerFactoryInfo;
 import com.taskconsole.service.impl.ZookeeperServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -31,5 +32,31 @@ public class ManageFactoryListController {
         managerFactoryInfoList = zookeeperService.getManagerFactoryInfoList();
         model.addAttribute("managerFactoryInfoList",managerFactoryInfoList);
         return "schedule/managerFactoryList";
+    }
+
+    @RequestMapping("managerFactoryDeal")
+    public String managerFactoryDeal(HttpServletRequest request,HttpServletResponse response,Model model){
+        boolean isRefreshParent = false;
+        String result="";
+        String action = request.getParameter("action");
+        String uuid = request.getParameter("uuid");
+        try {
+            if (action.equalsIgnoreCase("startManagerFactory")) {
+                ConsoleManager.getScheduleStrategyManager().updateManagerFactoryInfo(uuid,true);
+                isRefreshParent = true;
+            } else if (action.equalsIgnoreCase("stopManagerFactory")) {
+                ConsoleManager.getScheduleStrategyManager().updateManagerFactoryInfo(uuid,false);
+                isRefreshParent = true;
+            }else{
+                throw new Exception("不支持的操作：" + action);
+            }
+        } catch (Throwable e) {
+            e.printStackTrace();
+            result ="ERROR:" + e.getMessage();
+            isRefreshParent = false;
+        }
+        model.addAttribute("result",result);
+        model.addAttribute("isRefreshParent",isRefreshParent);
+        return "schedule/managerFactoryDeal";
     }
 }

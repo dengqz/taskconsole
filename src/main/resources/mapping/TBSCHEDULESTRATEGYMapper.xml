@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.taskconsole.dao.TBSCHEDULESTRATEGYMapper">
+  <resultMap id="BaseResultMap" type="com.taskconsole.dto.TBSCHEDULESTRATEGY">
+    <id column="URID" jdbcType="VARCHAR" property="urid" />
+    <result column="STRATEGYNAME" jdbcType="VARCHAR" property="strategyname" />
+    <result column="KIND" jdbcType="VARCHAR" property="kind" />
+    <result column="TASKNAME" jdbcType="VARCHAR" property="taskname" />
+    <result column="TASKPARAMETER" jdbcType="VARCHAR" property="taskparameter" />
+    <result column="NUMOFSINGLESERVER" jdbcType="DECIMAL" property="numofsingleserver" />
+    <result column="ASSIGNNUM" jdbcType="DECIMAL" property="assignnum" />
+    <result column="IPLIST" jdbcType="VARCHAR" property="iplist" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    URID, STRATEGYNAME, KIND, TASKNAME, TASKPARAMETER, NUMOFSINGLESERVER, ASSIGNNUM, 
+    IPLIST
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from T_TBSCHEDULE_STRATEGY
+    where URID = #{urid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from T_TBSCHEDULE_STRATEGY
+    where URID = #{urid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.taskconsole.dto.TBSCHEDULESTRATEGY">
+    insert into T_TBSCHEDULE_STRATEGY (URID, STRATEGYNAME, KIND, 
+      TASKNAME, TASKPARAMETER, NUMOFSINGLESERVER, 
+      ASSIGNNUM, IPLIST)
+    values (#{urid,jdbcType=VARCHAR}, #{strategyname,jdbcType=VARCHAR}, #{kind,jdbcType=VARCHAR}, 
+      #{taskname,jdbcType=VARCHAR}, #{taskparameter,jdbcType=VARCHAR}, #{numofsingleserver,jdbcType=DECIMAL}, 
+      #{assignnum,jdbcType=DECIMAL}, #{iplist,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.taskconsole.dto.TBSCHEDULESTRATEGY">
+    insert into T_TBSCHEDULE_STRATEGY
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="urid != null">
+        URID,
+      </if>
+      <if test="strategyname != null">
+        STRATEGYNAME,
+      </if>
+      <if test="kind != null">
+        KIND,
+      </if>
+      <if test="taskname != null">
+        TASKNAME,
+      </if>
+      <if test="taskparameter != null">
+        TASKPARAMETER,
+      </if>
+      <if test="numofsingleserver != null">
+        NUMOFSINGLESERVER,
+      </if>
+      <if test="assignnum != null">
+        ASSIGNNUM,
+      </if>
+      <if test="iplist != null">
+        IPLIST,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="urid != null">
+        #{urid,jdbcType=VARCHAR},
+      </if>
+      <if test="strategyname != null">
+        #{strategyname,jdbcType=VARCHAR},
+      </if>
+      <if test="kind != null">
+        #{kind,jdbcType=VARCHAR},
+      </if>
+      <if test="taskname != null">
+        #{taskname,jdbcType=VARCHAR},
+      </if>
+      <if test="taskparameter != null">
+        #{taskparameter,jdbcType=VARCHAR},
+      </if>
+      <if test="numofsingleserver != null">
+        #{numofsingleserver,jdbcType=DECIMAL},
+      </if>
+      <if test="assignnum != null">
+        #{assignnum,jdbcType=DECIMAL},
+      </if>
+      <if test="iplist != null">
+        #{iplist,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.taskconsole.dto.TBSCHEDULESTRATEGY">
+    update T_TBSCHEDULE_STRATEGY
+    <set>
+      <if test="strategyname != null">
+        STRATEGYNAME = #{strategyname,jdbcType=VARCHAR},
+      </if>
+      <if test="kind != null">
+        KIND = #{kind,jdbcType=VARCHAR},
+      </if>
+      <if test="taskname != null">
+        TASKNAME = #{taskname,jdbcType=VARCHAR},
+      </if>
+      <if test="taskparameter != null">
+        TASKPARAMETER = #{taskparameter,jdbcType=VARCHAR},
+      </if>
+      <if test="numofsingleserver != null">
+        NUMOFSINGLESERVER = #{numofsingleserver,jdbcType=DECIMAL},
+      </if>
+      <if test="assignnum != null">
+        ASSIGNNUM = #{assignnum,jdbcType=DECIMAL},
+      </if>
+      <if test="iplist != null">
+        IPLIST = #{iplist,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where URID = #{urid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.taskconsole.dto.TBSCHEDULESTRATEGY">
+    update T_TBSCHEDULE_STRATEGY
+    set STRATEGYNAME = #{strategyname,jdbcType=VARCHAR},
+      KIND = #{kind,jdbcType=VARCHAR},
+      TASKNAME = #{taskname,jdbcType=VARCHAR},
+      TASKPARAMETER = #{taskparameter,jdbcType=VARCHAR},
+      NUMOFSINGLESERVER = #{numofsingleserver,jdbcType=DECIMAL},
+      ASSIGNNUM = #{assignnum,jdbcType=DECIMAL},
+      IPLIST = #{iplist,jdbcType=VARCHAR}
+    where URID = #{urid,jdbcType=VARCHAR}
+  </update>
+</mapper>

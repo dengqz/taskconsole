@@ -1,6 +1,3 @@
-<%@page import="com.taobao.pamirs.schedule.ConsoleManager"%>
-<%@page import="com.taobao.pamirs.schedule.taskmanager.ScheduleTaskType"%>
-<%@page import="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=GB2312" %>
 <html>
@@ -128,7 +125,6 @@ function deleteTaskType(baseTaskType){
 function validateDel(str) {
     var flag = window.confirm("确认删除任务"+str+"?");
     if(flag) {
-        console.log(window);
         window.location.href="${pageContext.request.contextPath}/tasktypelist/dealTaskType?action=deleteTaskType&taskType="+str;
     }
     return false;
